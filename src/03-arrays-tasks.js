@@ -201,8 +201,8 @@ function getTail(arr, n) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-  throw new Error('Not implemented');
+function toCsvText(arr) {
+  return arr.map((subarr) => subarr.join(',')).join('\n');
 }
 
 /**
@@ -396,8 +396,8 @@ function findAllOccurrences(arr, item) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  return arr.join(',');
 }
 
 
@@ -427,9 +427,11 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => (a.city < b.city ? 1 : -1))
+    .sort((a, b) => (a.country > b.country ? 1 : -1));
 }
+
 
 /**
  * Creates an identity matrix of the specified size
@@ -449,8 +451,8 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return [...Array(n)].map((_, i, arr) => arr.map((__, j) => (i === j ? 1 : 0)));
 }
 
 /**
@@ -466,8 +468,14 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const arr = new Array(end - start + 1).fill();
+  const newArr = [];
+  arr.reduce((acc) => {
+    newArr.push(acc);
+    return acc + 1;
+  }, start);
+  return newArr;
 }
 
 /**
@@ -481,8 +489,8 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  return [...new Set(arr)];
 }
 
 /**
@@ -515,8 +523,16 @@ function distinct(/* arr */) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const groupMap = new Map();
+  array.map((_, i) => {
+    const key = keySelector(array[i]);
+    if (groupMap.has(key)) {
+      return groupMap.get(key).push(valueSelector(array[i]));
+    }
+    return groupMap.set(key, [valueSelector(array[i])]);
+  });
+  return groupMap;
 }
 
 
@@ -533,8 +549,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map(childrenSelector).flat();
 }
 
 
@@ -550,8 +566,16 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  const i = indexes[0];
+  const j = indexes[1];
+  const k = indexes[2];
+  if (j === undefined && k === undefined) {
+    return arr[i];
+  } if (k === undefined) {
+    return arr[i][j];
+  }
+  return arr[i][j][k];
 }
 
 
@@ -573,8 +597,16 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length % 2 === 0) {
+    const tail = arr.splice(arr.length / 2);
+    const head = arr;
+    return [...tail, ...head];
+  }
+  const center = arr.splice(arr.length / 2, 1);
+  const tail = arr.splice(arr.length / 2);
+  const head = arr;
+  return [...tail, ...center, ...head];
 }
 
 
