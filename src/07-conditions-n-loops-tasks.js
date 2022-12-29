@@ -286,8 +286,22 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let sum = 0;
+  let doubleDigit = false;
+  const ccnStr = ccn.toString();
+  for (let i = ccnStr.length - 1; i >= 0; i -= 1) {
+    let digit = +ccnStr[i];
+    if (doubleDigit) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+    sum += digit;
+    doubleDigit = !doubleDigit;
+  }
+  return sum % 10 === 0;
 }
 
 /**
@@ -402,8 +416,15 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const newPathes = pathes.map((path) => path.match(/[^/]*\//g));
+  const result = [];
+  for (let i = 0; i < newPathes[0].length; i += 1) {
+    if (newPathes.every((path) => path[i] === newPathes[0][i])) {
+      result.push(newPathes[0][i]);
+    }
+  }
+  return result.join('');
 }
 
 
@@ -425,8 +446,19 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    result[i] = [];
+    for (let j = 0; j < m2[0].length; j += 1) {
+      let sum = 0;
+      for (let k = 0; k < m1[0].length; k += 1) {
+        sum += m1[i][k] * m2[k][j];
+      }
+      result[i][j] = sum;
+    }
+  }
+  return result;
 }
 
 
@@ -460,8 +492,32 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const combs = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  const positionNew = [].concat(...position);
+  const arrWinner = [];
+  for (let i = 0; i < combs.length; i += 1) {
+    for (let j = 0; j < combs[i].length; j += 1) {
+      const n = combs[i][j];
+      arrWinner.push(positionNew[n]);
+    }
+  }
+  for (let i = 0; i < arrWinner.length; i += 3) {
+    if (arrWinner[i] === arrWinner[i + 1] && arrWinner[i + 1] === arrWinner[i + 2]
+      && arrWinner[i] !== undefined) {
+      return arrWinner[i];
+    }
+  }
+  return undefined;
 }
 
 
