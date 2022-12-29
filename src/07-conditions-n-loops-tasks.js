@@ -492,34 +492,52 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
+// function evaluateTicTacToePosition(position) {
+//   const combs = [
+//     [0, 1, 2],
+//     [3, 4, 5],
+//     [6, 7, 8],
+//     [0, 3, 6],
+//     [1, 4, 7],
+//     [2, 5, 8],
+//     [0, 4, 8],
+//     [2, 4, 6],
+//   ];
+//   const positionNew = [].concat(...position);
+//   const arrWinner = [];
+//   for (let i = 0; i < combs.length; i += 1) {
+//     for (let j = 0; j < combs[i].length; j += 1) {
+//       const n = combs[i][j];
+//       arrWinner.push(positionNew[n]);
+//     }
+//   }
+//   for (let i = 0; i < arrWinner.length; i += 3) {
+//     if (arrWinner[i] === arrWinner[i + 1] && arrWinner[i] === arrWinner[i + 2]
+//       && arrWinner[i] !== undefined) {
+//       return arrWinner[i];
+//     }
+//   }
+//   return undefined;
+// }
 function evaluateTicTacToePosition(position) {
-  const combs = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  const positionNew = [].concat(...position);
-  const arrWinner = [];
-  for (let i = 0; i < combs.length; i += 1) {
-    for (let j = 0; j < combs[i].length; j += 1) {
-      const n = combs[i][j];
-      arrWinner.push(positionNew[n]);
-    }
-  }
-  for (let i = 0; i < arrWinner.length; i += 3) {
-    if (arrWinner[i] === arrWinner[i + 1] && arrWinner[i + 1] === arrWinner[i + 2]
-      && arrWinner[i] !== undefined) {
-      return arrWinner[i];
-    }
-  }
+  if (position[0][0] === position[0][1] && position[0][1] === position[0][2]
+    && position[0][0] !== undefined) return position[0][0];
+  if (position[1][0] === position[1][1] && position[1][1] === position[1][2]
+    && position[1][0] !== undefined) return position[1][0];
+  if (position[2][0] === position[2][1] && position[2][1] === position[2][2]
+    && position[2][0] !== undefined) return position[2][0];
+  if (position[0][0] === position[1][0] && position[1][0] === position[2][0]
+    && position[0][0] !== undefined) return position[0][0];
+  if (position[0][1] === position[1][1] && position[1][1] === position[2][1]
+    && position[0][1] !== undefined) return position[0][1];
+  if (position[0][2] === position[1][2] && position[1][2] === position[2][2]
+    && position[0][2] !== undefined) return position[0][2];
+  if (position[0][0] === position[1][1] && position[1][1] === position[2][2]
+    && position[0][0] !== undefined) return position[0][0];
+  if (position[0][2] === position[1][1] && position[1][1] === position[2][0]
+    && position[0][2] !== undefined) return position[0][2];
   return undefined;
 }
-
 
 module.exports = {
   getFizzBuzz,
